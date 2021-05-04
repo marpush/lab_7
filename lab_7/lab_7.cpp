@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <cmath>
 using namespace std;
 #define RIGHT_BORDER 100
@@ -7,34 +7,34 @@ using namespace std;
 
 class CountingCh{
     private:
-    double x;
+	double x;
 	static int border;
-    public:
-
-		double scan_double_number()
+    public:		
+		void set_x()
 		{
-			while (true) {
+			bool DataIsNotNumber = true;
+			while (DataIsNotNumber) {
 				cout << "Enter the function argument: ";
-				double x = 0;
-				cin >> x;
+				cin >> this->x;
 
 				if (cin.fail()) {
 					cout << "Entered is not a number.\n";
 					cin.clear();
 					std::cin.ignore(32767, '\n');
-				}
-				else {
-					return x;
+				} else {
+					DataIsNotNumber = false;
 				}
 			}
 		}
 
-		int scan_number_in_range(const int left_border, const int right_border)
+		static void set_border()
 		{
-			while (true) {
+			bool DataIsNotNumber = true;
+			while (DataIsNotNumber) {
 				cout << "Enter the calculation boundary\n ";
+				const int left_border = 0;
+				const int right_border = RIGHT_BORDER;
 				cout << "Enter a border less than " << right_border << " greater than " << left_border << endl;
-				int border = 0;
 				cin >> border;
 
 				if (cin.fail()) {
@@ -44,7 +44,7 @@ class CountingCh{
 				}
 				else {
 					if ((border > left_border) && (border < right_border)) {
-						return border;
+						DataIsNotNumber = false;
 					}
 					else {
 						if (border <= left_border) {
@@ -60,7 +60,7 @@ class CountingCh{
 			}
 		}
 
-		void calculates_ch(int border) {
+		void calculates_ch() {
 			double ch = 0;
 			for (int index = 0; index <= border; index++) {
 				ch = (pow(x, index * 2) / calculates_factorial(index * 2)) + ch;
@@ -82,6 +82,7 @@ int CountingCh::border;
 int main()
 {
 	CountingCh obj;
-	obj.scan_double_number();
-	obj.calculates_ch(obj.scan_number_in_range(0, RIGHT_BORDER));
+	obj.set_x();
+	CountingCh::set_border();
+	obj.calculates_ch();
 }
